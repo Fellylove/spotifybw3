@@ -46,7 +46,7 @@ def song_suggester(artist, title):
     cols= ['id','acousticness','danceability', 'duration_ms','energy','instrumentalness','liveness', 'popularity','speechiness', 'tempo','valence','explicit','key','mode']
     df = df[cols]
 
-    model = joblib.load ('knnbaseline.joblib.gz')
+    gi
 
     #df2_id = df['id']
     df2_features = df[df.columns[1:]]
@@ -62,7 +62,7 @@ def song_suggester(artist, title):
 
     transformed_features2 = column_trans.fit_transform (df2_features)
     neighbors = model.kneighbors (transformed_features2[0].reshape (1, -1), return_distance=False)[0]
-    df_song = pd.read_csv ('spotify_features_jjb.gz')['id']
+    df_song = pd.read_csv ('app/spotify_features_jjb.gz')['id']
 
     # for n in neighbors:
     # print(df_song.iloc[n])

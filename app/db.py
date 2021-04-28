@@ -43,7 +43,7 @@ async def get_url(connection=Depends(get_db)):
 
 @router.get('/info')
 def database():
-    df_database = pd.read_csv ('spotify_features_jjb.gz').head(30)
+    df_database = pd.read_csv ('app/spotify_features_jjb.gz').head(30)
     json_database = df_database.to_json()
 
     return (json_database)
