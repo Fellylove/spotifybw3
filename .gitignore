@@ -1,6 +1,6 @@
 .DS_Store
 .vscode/
-Pipfile.lock
+Pipfile*
 temporary.db
 
 # Byte-compiled / optimized / DLL files
