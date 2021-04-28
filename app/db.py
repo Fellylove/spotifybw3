@@ -5,7 +5,9 @@ import os
 from dotenv import load_dotenv
 from fastapi import APIRouter, Depends
 import sqlalchemy
-
+import pandas as pd
+import pandas as pd
+from sqlalchemy import create_engine
 router = APIRouter()
 
 
@@ -18,7 +20,7 @@ async def get_db() -> sqlalchemy.engine.base.Connection:
     Otherwise uses a SQLite database for initial local development.
     """
     load_dotenv()
-    database_url = os.getenv('DATABASE_URL', default='sqlite:///temporary.db')
+    database_url = os.getenv('database', default='sqlite:///temporary.db')
     engine = sqlalchemy.create_engine(database_url)
     connection = engine.connect()
     try:
@@ -27,7 +29,7 @@ async def get_db() -> sqlalchemy.engine.base.Connection:
         connection.close()
 
 
-@router.get('/info')
+
 async def get_url(connection=Depends(get_db)):
     """Verify we can connect to the database, 
     and return the database URL in this format:
@@ -38,3 +40,20 @@ async def get_url(connection=Depends(get_db)):
     """
     url_without_password = repr(connection.engine.url)
     return {'database_url': url_without_password}
+
+@router.get('/info')
+def database():
+    df_database = pd.read_csv ('spotify_features_jjb.gz').head(30)
+    json_database = df_database.to_json()
+
+    return (json_database)
+
+
+
+#engine = create_engine (
+    #'postgres://wemapwhh:u2AUqwTX0hf34pjNmZcnw_v0XUAT4AEO@kashin.db.elephantsql.com:5432/wemapwhh')
+
+#df_spotify = pd.read_csv('spotify_features_jjb.gz')
+#df_spotify.columns = ['id',	'acousticness',	'danceability',	'duration_ms', 'energy', 'instrumentalness', 'liveness','popularity', 'speechiness', 'tempo', 'valence', 'explicit', 'key',	'mode']
+#df_spotify.to_sql ('spotify_database', engine)
+

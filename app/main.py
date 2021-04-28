@@ -2,7 +2,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 import uvicorn
 
-from app import db, ml, viz
+from app import db, ml, viz,spotify
 
 description = """
 Edit your app's title and description. See [https://fastapi.tiangolo.com/tutorial/metadata/](https://fastapi.tiangolo.com/tutorial/metadata/)
@@ -16,14 +16,16 @@ To use these interactive docs:
 """
 
 app = FastAPI(
-    title='DS API',
-    description=description,
+    title='Spotify song suggester',
+    description='Helps users find and visualize songs that fit personal taste',
     docs_url='/',
 )
 
 app.include_router(db.router, tags=['Database'])
-app.include_router(ml.router, tags=['Machine Learning'])
+app.include_router(spotify.router, tags= ['Machine Learning'])
+#app.include_router(ml.router, tags=['Machine Learning'])
 app.include_router(viz.router, tags=['Visualization'])
+
 
 app.add_middleware(
     CORSMiddleware,
@@ -35,3 +37,4 @@ app.add_middleware(
 
 if __name__ == '__main__':
     uvicorn.run(app)
+
